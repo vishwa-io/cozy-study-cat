@@ -1,4 +1,83 @@
 
+const profileUsername = document.querySelector(".profile-username");
+const sessionPopup = document.querySelector(".session-popup");
+const profileCat = document.querySelector(".profile-cat");
+const floatingProfile = document.querySelector(".floating-profile");
+// ======================================
+// CAT MESSAGES
+// ======================================
+const catMessage = document.querySelector(".cat-message");
+
+const messages = [
+    "you can do it ✦",
+    "just one more task!",
+    "proud of you!",
+    "focus focus!!",
+    "meow!! study time"
+];
+profileCat.addEventListener("click", function () {
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+    catMessage.textContent = randomMessage;
+
+    setTimeout(function () {
+        catMessage.textContent = "";
+    }, 2000);
+});
+
+// ======================================
+// PROFILE CARD
+// ======================================
+const profileCardWindow = document.querySelector(".profile-card-window");
+const cardPfp = document.querySelector(".card-pfp");
+const cardUsername = document.querySelector(".card-username");
+const cardBioSave = document.querySelector(".card-bio-save");
+const cardBio = document.querySelector(".card-bio");
+const cardBioDisplay = document.querySelector(".card-bio-display");
+const profileCardClose = document.querySelector(".profile-card-close");
+cardBioSave.onclick = function () {
+    cardBioDisplay.textContent = cardBio.value;
+
+    cardBio.style.display = "none";
+    cardBioSave.style.display = "none";
+};
+
+profileCardClose.onclick = function () {
+    profileCardWindow.style.display = "none";
+};
+floatingProfile.addEventListener("dblclick", function () {
+    profileCardWindow.style.display = "block";
+
+    cardUsername.textContent = profileUsername.textContent;
+    cardPfp.src = "assets/profile_" + selectedPfp + ".png";
+});
+
+// ======================================
+// FLOATING PROFILE
+// ======================================
+
+let draggingProfile = false;
+let profileOffsetX = 0;
+let profileOffsetY = 0;
+
+floatingProfile.addEventListener("mousedown", function (event) {
+    draggingProfile = true;
+
+    profileOffsetX = event.clientX - floatingProfile.offsetLeft;
+    profileOffsetY = event.clientY - floatingProfile.offsetTop;
+});
+
+document.addEventListener("mousemove", function (event) {
+    if (draggingProfile) {
+        floatingProfile.style.left = event.clientX - profileOffsetX + "px";
+        floatingProfile.style.top = event.clientY - profileOffsetY + "px";
+        floatingProfile.style.bottom = "auto";
+    }
+});
+
+document.addEventListener("mouseup", function () {
+    draggingProfile = false;
+});
 
 // ======================================
 // START SCREEN & PROFILE SETUP
@@ -64,9 +143,7 @@ startButton.onclick = function () {
 // COMPANION CAT SYSTEM
 // ======================================
 
-const profileUsername = document.querySelector(".profile-username");
-const sessionPopup = document.querySelector(".session-popup");
-const profileCat = document.querySelector(".profile-cat");
+
 
 function updateProfileCat() {
 
@@ -106,79 +183,3 @@ function updateProfileCat() {
     }
 }
 
-// ======================================
-// FLOATING PROFILE
-// ======================================
-const floatingProfile = document.querySelector(".floating-profile");
-
-let draggingProfile = false;
-let profileOffsetX = 0;
-let profileOffsetY = 0;
-
-floatingProfile.addEventListener("mousedown", function (event) {
-    draggingProfile = true;
-
-    profileOffsetX = event.clientX - floatingProfile.offsetLeft;
-    profileOffsetY = event.clientY - floatingProfile.offsetTop;
-});
-
-document.addEventListener("mousemove", function (event) {
-    if (draggingProfile) {
-        floatingProfile.style.left = event.clientX - profileOffsetX + "px";
-        floatingProfile.style.top = event.clientY - profileOffsetY + "px";
-        floatingProfile.style.bottom = "auto";
-    }
-});
-
-document.addEventListener("mouseup", function () {
-    draggingProfile = false;
-});
-
-// ======================================
-// CAT MESSAGES
-// ======================================
-const catMessage = document.querySelector(".cat-message");
-
-const messages = [
-    "you can do it ✦",
-    "just one more task!",
-    "proud of you!",
-    "focus focus!!",
-    "meow!! study time"
-];
-profileCat.addEventListener("click", function () {
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-
-    catMessage.textContent = randomMessage;
-
-    setTimeout(function () {
-        catMessage.textContent = "";
-    }, 2000);
-});
-
-// ======================================
-// PROFILE CARD
-// ======================================
-const profileCardWindow = document.querySelector(".profile-card-window");
-const cardPfp = document.querySelector(".card-pfp");
-const cardUsername = document.querySelector(".card-username");
-const cardBioSave = document.querySelector(".card-bio-save");
-const cardBio = document.querySelector(".card-bio");
-const cardBioDisplay = document.querySelector(".card-bio-display");
-const profileCardClose = document.querySelector(".profile-card-close");
-cardBioSave.onclick = function () {
-    cardBioDisplay.textContent = cardBio.value;
-
-    cardBio.style.display = "none";
-    cardBioSave.style.display = "none";
-};
-
-profileCardClose.onclick = function () {
-    profileCardWindow.style.display = "none";
-};
-floatingProfile.addEventListener("dblclick", function () {
-    profileCardWindow.style.display = "block";
-
-    cardUsername.textContent = profileUsername.textContent;
-    cardPfp.src = "assets/profile_" + selectedPfp + ".png";
-});
