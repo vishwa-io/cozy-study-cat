@@ -1,3 +1,7 @@
+
+// ======================================
+// POMODORO TIMER
+// ======================================
 const message = document.querySelector(".message");
 const timer = document.querySelector(".timer");
 const cat = document.querySelector(".cat-gif");
@@ -147,8 +151,9 @@ resetButton.onclick = function () {
     }
 };
 
-
-//making windows draggable
+// ======================================
+// DRAGGABLE WINDOWS
+// ======================================
 const windows = document.querySelectorAll(".window-box");
 
 windows.forEach(function(windowBox) {
@@ -176,7 +181,10 @@ windows.forEach(function(windowBox) {
     });
 
 });
-//todo list - add and delete tasks
+
+// ======================================
+// TODO LIST
+// ======================================
 const todoInput = document.querySelector(".todo-input");
 const todoAddButton = document.querySelector(".todo-add-btn");
 const todoList = document.querySelector(".todo-list");
@@ -207,7 +215,10 @@ todoAddButton.onclick = function () {
         task.remove();
     };
 };
-// start screen - choose name, profile pic and cat
+
+// ======================================
+// START SCREEN & PROFILE SETUP
+// ======================================
 const startScreen = document.querySelector(".start-screen");
 const startName = document.querySelector(".start-name");
 const startButton = document.querySelector(".start-button");
@@ -267,7 +278,10 @@ startButton.onclick = function () {
 const profileUsername = document.querySelector(".profile-username");
 const sessionPopup = document.querySelector(".session-popup");
 const profileCat = document.querySelector(".profile-cat");
-//changes the companion cat at 25%, 50%,75% and 100%
+
+// ======================================
+// COMPANION CAT SYSTEM
+// ======================================
 function updateProfileCat() {
 
     let totalTime;
@@ -305,6 +319,10 @@ function updateProfileCat() {
         }
     }
 }
+
+// ======================================
+// FLOATING PROFILE
+// ======================================
 const floatingProfile = document.querySelector(".floating-profile");
 
 let draggingProfile = false;
@@ -330,7 +348,9 @@ document.addEventListener("mouseup", function () {
     draggingProfile = false;
 });
 
-//small messages when cat is clicked
+// ======================================
+// CAT MESSAGES
+// ======================================
 const catMessage = document.querySelector(".cat-message");
 
 const messages = [
@@ -349,7 +369,10 @@ profileCat.addEventListener("click", function () {
         catMessage.textContent = "";
     }, 2000);
 });
-// profile window - show pfp, username and bio
+
+// ======================================
+// PROFILE CARD
+// ======================================
 const profileCardWindow = document.querySelector(".profile-card-window");
 const cardPfp = document.querySelector(".card-pfp");
 const cardUsername = document.querySelector(".card-username");
