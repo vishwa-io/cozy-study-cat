@@ -152,71 +152,6 @@ resetButton.onclick = function () {
 };
 
 // ======================================
-// DRAGGABLE WINDOWS
-// ======================================
-const windows = document.querySelectorAll(".window-box");
-
-windows.forEach(function(windowBox) {
-
-    let isDragging = false;
-    let offsetX;
-    let offsetY;
-
-    windowBox.addEventListener("mousedown", function(event) {
-        isDragging = true;
-
-        offsetX = event.clientX - windowBox.offsetLeft;
-        offsetY = event.clientY - windowBox.offsetTop;
-    });
-
-    document.addEventListener("mousemove", function(event) {
-        if (isDragging) {
-            windowBox.style.left = event.clientX - offsetX + "px";
-            windowBox.style.top = event.clientY - offsetY + "px";
-        }
-    });
-
-    document.addEventListener("mouseup", function() {
-        isDragging = false;
-    });
-
-});
-
-// ======================================
-// TODO LIST
-// ======================================
-const todoInput = document.querySelector(".todo-input");
-const todoAddButton = document.querySelector(".todo-add-btn");
-const todoList = document.querySelector(".todo-list");
-
-todoAddButton.onclick = function () {
-
-    const taskText = todoInput.value;
-
-    if (taskText === "") {
-        return;
-    }
-
-    const task = document.createElement("div");
-    task.classList.add("todo-task");
-
-    task.innerHTML = `
-        <span class="task-text">${taskText}</span>
-        <button class="delete-task">x</button>
-    `;
-
-    todoList.appendChild(task);
-
-    todoInput.value = "";
-
-    const deleteButton = task.querySelector(".delete-task");
-
-    deleteButton.onclick = function () {
-        task.remove();
-    };
-};
-
-// ======================================
 // START SCREEN & PROFILE SETUP
 // ======================================
 const startScreen = document.querySelector(".start-screen");
@@ -275,13 +210,15 @@ startButton.onclick = function () {
 
     updateProfileCat();
 };
-const profileUsername = document.querySelector(".profile-username");
-const sessionPopup = document.querySelector(".session-popup");
-const profileCat = document.querySelector(".profile-cat");
 
 // ======================================
 // COMPANION CAT SYSTEM
 // ======================================
+
+const profileUsername = document.querySelector(".profile-username");
+const sessionPopup = document.querySelector(".session-popup");
+const profileCat = document.querySelector(".profile-cat");
+
 function updateProfileCat() {
 
     let totalTime;

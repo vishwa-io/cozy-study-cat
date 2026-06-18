@@ -6,6 +6,31 @@ A cozy pixel-art study website with a pomodoro timer, to-do list, and a little c
 
 ## Features
 
+### Productivity
+- Pomodoro Timer
+- Work / Break Modes
+- Session Completion Messages
+
+### Companion Cat
+- Cat Selection
+- Progress-Based Cat Growth
+- Random Encouragement Messages
+
+### Profile
+- Username
+- Profile Picture
+- Bio Card
+
+### Desktop Experience
+- Draggable Windows
+- Floating Companion
+- Pixel Art Interface
+
+### Tasks
+- Add Tasks
+- Delete Tasks
+
+
 - Work / Break pomodoro timer
 - To-do list with add and delete
 - Companion cat changes at 25%, 50%, 75%, and 100% of the session
