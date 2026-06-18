@@ -1,93 +1,26 @@
 
+// ======================================
+// START SCREEN & PROFILE SETUP
+// ======================================
 const profileUsername = document.querySelector(".profile-username");
 const sessionPopup = document.querySelector(".session-popup");
 const profileCat = document.querySelector(".profile-cat");
 const floatingProfile = document.querySelector(".floating-profile");
-// ======================================
-// CAT MESSAGES
-// ======================================
-const catMessage = document.querySelector(".cat-message");
 
-const messages = [
-    "you can do it ✦",
-    "just one more task!",
-    "proud of you!",
-    "focus focus!!",
-    "meow!! study time"
-];
-profileCat.addEventListener("click", function () {
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-
-    catMessage.textContent = randomMessage;
-
-    setTimeout(function () {
-        catMessage.textContent = "";
-    }, 2000);
-});
-
-// ======================================
-// PROFILE CARD
-// ======================================
-const profileCardWindow = document.querySelector(".profile-card-window");
-const cardPfp = document.querySelector(".card-pfp");
-const cardUsername = document.querySelector(".card-username");
-const cardBioSave = document.querySelector(".card-bio-save");
-const cardBio = document.querySelector(".card-bio");
-const cardBioDisplay = document.querySelector(".card-bio-display");
-const profileCardClose = document.querySelector(".profile-card-close");
-cardBioSave.onclick = function () {
-    cardBioDisplay.textContent = cardBio.value;
-
-    cardBio.style.display = "none";
-    cardBioSave.style.display = "none";
-};
-
-profileCardClose.onclick = function () {
-    profileCardWindow.style.display = "none";
-};
-floatingProfile.addEventListener("dblclick", function () {
-    profileCardWindow.style.display = "block";
-
-    cardUsername.textContent = profileUsername.textContent;
-    cardPfp.src = "assets/profile_" + selectedPfp + ".png";
-});
-
-// ======================================
-// FLOATING PROFILE
-// ======================================
-
-let draggingProfile = false;
-let profileOffsetX = 0;
-let profileOffsetY = 0;
-
-floatingProfile.addEventListener("mousedown", function (event) {
-    draggingProfile = true;
-
-    profileOffsetX = event.clientX - floatingProfile.offsetLeft;
-    profileOffsetY = event.clientY - floatingProfile.offsetTop;
-});
-
-document.addEventListener("mousemove", function (event) {
-    if (draggingProfile) {
-        floatingProfile.style.left = event.clientX - profileOffsetX + "px";
-        floatingProfile.style.top = event.clientY - profileOffsetY + "px";
-        floatingProfile.style.bottom = "auto";
-    }
-});
-
-document.addEventListener("mouseup", function () {
-    draggingProfile = false;
-});
-
-// ======================================
-// START SCREEN & PROFILE SETUP
-// ======================================
 const startScreen = document.querySelector(".start-screen");
-const startName = document.querySelector(".start-name");
 const startButton = document.querySelector(".start-button");
 
-let selectedPfp = "blue";
+const savedUsername = localStorage.getItem("username");
+const startName = document.querySelector(".start-name");
+const cardUsername = document.querySelector(".card-username");
+const cardPfp = document.querySelector(".card-pfp");
 
+let selectedPfp = "blue";
+const savedPfp = localStorage.getItem("pfp");
+
+if (savedPfp) {
+    selectedPfp = savedPfp;
+}
 const pfpOptions = document.querySelectorAll(".pfp-option");
 
 pfpOptions.forEach(function(pfp) {
@@ -95,25 +28,48 @@ pfpOptions.forEach(function(pfp) {
         pfpOptions.forEach(p => p.classList.remove("selected"));
         pfp.classList.add("selected");
         selectedPfp = pfp.dataset.pfp;
+        localStorage.setItem("pfp", selectedPfp);
+
     };
 });
+    pfpOptions.forEach(function (pfp) {
+    if (pfp.dataset.pfp === selectedPfp) {
+        pfp.classList.add("selected");
+    } else {
+        pfp.classList.remove("selected");
+    }
+});
+
 const blackOption = document.querySelector(".black-option");
 const orangeOption = document.querySelector(".orange-option");
 
 let selectedCat = "black";
+const savedCat = localStorage.getItem("cat");
 
-blackOption.classList.add("selected");
+if (savedCat) {
+    selectedCat = savedCat;
+}
+if (selectedCat === "orange") {
+    orangeOption.classList.add("selected");
+    blackOption.classList.remove("selected");
+}
+
+if (selectedCat === "black") {
+    blackOption.classList.add("selected");
+    orangeOption.classList.remove("selected");
+}
+
 
 blackOption.onclick = function () {
     selectedCat = "black";
-
+    localStorage.setItem("cat", "black");
     blackOption.classList.add("selected");
     orangeOption.classList.remove("selected");
 };
 
 orangeOption.onclick = function () {
     selectedCat = "orange";
-
+    localStorage.setItem("cat", "orange");
     orangeOption.classList.add("selected");
     blackOption.classList.remove("selected");
 };
@@ -127,6 +83,7 @@ startButton.onclick = function () {
     }
 
     profileUsername.textContent = userName;
+    localStorage.setItem("username", userName);
     cardUsername.textContent = userName;
 
     profileCat.style.display = "block";
@@ -138,7 +95,20 @@ startButton.onclick = function () {
 
     updateProfileCat();
 };
+if (savedUsername && savedCat && savedPfp) {
+    profileUsername.textContent = savedUsername;
+    cardUsername.textContent = savedUsername;
 
+    cardPfp.src = "assets/profile_" + savedPfp + ".png";
+
+    selectedCat = savedCat;
+    selectedPfp = savedPfp;
+
+    floatingProfile.style.display = "flex";
+    startScreen.style.display = "none";
+
+    updateProfileCat();
+}
 // ======================================
 // COMPANION CAT SYSTEM
 // ======================================
@@ -183,3 +153,77 @@ function updateProfileCat() {
     }
 }
 
+// ======================================
+// FLOATING PROFILE
+// ======================================
+
+let draggingProfile = false;
+let profileOffsetX = 0;
+let profileOffsetY = 0;
+
+floatingProfile.addEventListener("mousedown", function (event) {
+    draggingProfile = true;
+
+    profileOffsetX = event.clientX - floatingProfile.offsetLeft;
+    profileOffsetY = event.clientY - floatingProfile.offsetTop;
+});
+
+document.addEventListener("mousemove", function (event) {
+    if (draggingProfile) {
+        floatingProfile.style.left = event.clientX - profileOffsetX + "px";
+        floatingProfile.style.top = event.clientY - profileOffsetY + "px";
+        floatingProfile.style.bottom = "auto";
+    }
+});
+
+document.addEventListener("mouseup", function () {
+    draggingProfile = false;
+});
+
+
+// ======================================
+// CAT MESSAGES
+// ======================================
+const catMessage = document.querySelector(".cat-message");
+
+const messages = [
+    "you can do it ✦",
+    "just one more task!",
+    "proud of you!",
+    "focus focus!!",
+    "meow!! study time"
+];
+profileCat.addEventListener("click", function () {
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+    catMessage.textContent = randomMessage;
+
+    setTimeout(function () {
+        catMessage.textContent = "";
+    }, 2000);
+});
+
+// ======================================
+// PROFILE CARD
+// ======================================
+const profileCardWindow = document.querySelector(".profile-card-window");
+const cardBioSave = document.querySelector(".card-bio-save");
+const cardBio = document.querySelector(".card-bio");
+const cardBioDisplay = document.querySelector(".card-bio-display");
+const profileCardClose = document.querySelector(".profile-card-close");
+cardBioSave.onclick = function () {
+    cardBioDisplay.textContent = cardBio.value;
+
+    cardBio.style.display = "none";
+    cardBioSave.style.display = "none";
+};
+
+profileCardClose.onclick = function () {
+    profileCardWindow.style.display = "none";
+};
+floatingProfile.addEventListener("dblclick", function () {
+    profileCardWindow.style.display = "block";
+
+    cardUsername.textContent = profileUsername.textContent;
+    cardPfp.src = "assets/profile_" + selectedPfp + ".png";
+});
